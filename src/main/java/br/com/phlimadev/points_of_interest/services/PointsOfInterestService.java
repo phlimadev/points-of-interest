@@ -1,6 +1,8 @@
 package br.com.phlimadev.points_of_interest.services;
 
 import br.com.phlimadev.points_of_interest.dtos.AllPointsDTO;
+import br.com.phlimadev.points_of_interest.dtos.ProximityPointsDTO;
+import br.com.phlimadev.points_of_interest.dtos.RequestProximityPointsDTO;
 import br.com.phlimadev.points_of_interest.dtos.RegisterDTO;
 import br.com.phlimadev.points_of_interest.entities.PointsOfInterest;
 import br.com.phlimadev.points_of_interest.infra.exceptions.NegativeCoordinateException;
@@ -30,5 +32,18 @@ public class PointsOfInterestService {
     public List<AllPointsDTO> searchAllPoints() {
         List<AllPointsDTO> allPoints = pointsOfInterestRepository.findAll().stream().map(AllPointsDTO::new).toList();
         return allPoints;
+    }
+
+    public List<ProximityPointsDTO> searchForProximity(RequestProximityPointsDTO data) {
+        List<ProximityPointsDTO> filteredList = pointsOfInterestRepository
+                .findAll()
+                .stream()
+                .map(ProximityPointsDTO::new)
+                .filter(point ->
+                        Math.sqrt(Math.pow(point.coordinateX() - data.coordinateX(), 2) +
+                                Math.pow(point.coordinateY() - data.coordinateY(), 2))
+                                <= data.maximumDistance())
+                .toList();
+        return filteredList;
     }
 }
