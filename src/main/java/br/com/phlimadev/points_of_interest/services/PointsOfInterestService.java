@@ -1,11 +1,14 @@
 package br.com.phlimadev.points_of_interest.services;
 
+import br.com.phlimadev.points_of_interest.dtos.AllPointsDTO;
 import br.com.phlimadev.points_of_interest.dtos.RegisterDTO;
 import br.com.phlimadev.points_of_interest.entities.PointsOfInterest;
 import br.com.phlimadev.points_of_interest.infra.exceptions.NegativeCoordinateException;
 import br.com.phlimadev.points_of_interest.repositories.PointsOfInterestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PointsOfInterestService {
@@ -22,5 +25,10 @@ public class PointsOfInterestService {
         validate(register.coordinateX(), register.coordinateY());
         PointsOfInterest newPoint = new PointsOfInterest(register);
         pointsOfInterestRepository.save(newPoint);
+    }
+
+    public List<AllPointsDTO> searchAllPoints() {
+        List<AllPointsDTO> allPoints = pointsOfInterestRepository.findAll().stream().map(AllPointsDTO::new).toList();
+        return allPoints;
     }
 }
