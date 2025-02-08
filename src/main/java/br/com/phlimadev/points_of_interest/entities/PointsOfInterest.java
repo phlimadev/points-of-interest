@@ -1,5 +1,6 @@
 package br.com.phlimadev.points_of_interest.entities;
 
+import br.com.phlimadev.points_of_interest.dtos.RegisterDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,4 +17,10 @@ public class PointsOfInterest {
     private String name;
     private Integer coordinateX;
     private Integer coordinateY;
+
+    public PointsOfInterest(RegisterDTO register) {
+        this.name = register.name();
+        this.coordinateX = register.coordinateX();
+        this.coordinateY = register.coordinateY();
+    }
 }
