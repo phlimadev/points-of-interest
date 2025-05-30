@@ -29,9 +29,9 @@ public class PointOfInterestService {
         return repository.findAll()
                 .stream()
                 .filter(point -> {
-                    int dx = point.getCoordinateX() - coordinateX;
-                    int dy = point.getCoordinateY() - coordinateY;
-                    return (dx * dx + dy * dy) <= maximumDistance * maximumDistance;
+                    int deltaX = point.getCoordinateX() - coordinateX;
+                    int deltaY = point.getCoordinateY() - coordinateY;
+                    return (deltaX * deltaX + deltaY * deltaY) <= maximumDistance * maximumDistance;
                 })
                 .map(PointOfInterestDTO::new)
                 .collect(Collectors.toList());
