@@ -6,6 +6,9 @@ import br.com.phlimadev.points_of_interest.persistence.PointOfInterestRepository
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class PointOfInterestService {
@@ -16,5 +19,9 @@ public class PointOfInterestService {
                 null, data.name(), data.coordinateX(), data.coordinateY(), null, null
         );
         repository.save(newPointOfInterest);
+    }
+
+    public List<PointOfInterestDTO> getAll() {
+        return repository.findAll().stream().map(PointOfInterestDTO::new).collect(Collectors.toList());
     }
 }
