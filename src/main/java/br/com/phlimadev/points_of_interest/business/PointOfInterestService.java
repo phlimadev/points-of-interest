@@ -24,4 +24,20 @@ public class PointOfInterestService {
     public List<PointOfInterestDTO> getAll() {
         return repository.findAll().stream().map(PointOfInterestDTO::new).collect(Collectors.toList());
     }
+
+    private List<PointOfInterestDTO> performProximityCalculations(Integer coordinateX, Integer coordinateY, Double maximumDistance) {
+        return repository.findAll()
+                .stream()
+                .filter(point -> {
+                    int dx = point.getCoordinateX() - coordinateX;
+                    int dy = point.getCoordinateY() - coordinateY;
+                    return (dx * dx + dy * dy) <= maximumDistance * maximumDistance;
+                })
+                .map(PointOfInterestDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<PointOfInterestDTO> listByProximity(Integer coordinateX, Integer coordinateY, Double maximumDistance) {
+        return performProximityCalculations(coordinateX, coordinateY, maximumDistance);
+    }
 }
