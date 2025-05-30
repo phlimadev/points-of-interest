@@ -1,6 +1,7 @@
-package br.com.phlimadev.points_of_interest.controller.dto;
+package br.com.phlimadev.points_of_interest.controller;
 
 import br.com.phlimadev.points_of_interest.business.PointOfInterestService;
+import br.com.phlimadev.points_of_interest.controller.dto.PointOfInterestDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
